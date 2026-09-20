@@ -30,7 +30,53 @@ void getNextDay(int day, int month, int year){
   }
   print("Next day: $day.$month.$year");
 }
+void countVowels( String text){
+  String vowels = "aeiouAEIOU";
+  int count = 0;
 
+  for (int i = 0;i < text.length; i++){
+    if (vowels.contains(text[i])){
+    count ++;
+  }
+}
+print('"$text" -> $count');
+}
+void FindMaxMin(List<int> numbers){
+  int min = numbers[0];
+  int max = numbers[0];
+  for (int i = 0; i < numbers.length; i ++){
+    if(numbers[i] > max){
+      max = numbers[i];
+    }
+    else if (numbers[i] < min){
+      min = numbers[i];
+    }
+  }
+  print("Max: $max Min: $min");
+}
+void PrimeChecker(int n){
+  bool isPrime = true;
+  if (n % 2 == 0 && n != 2){
+    isPrime = false;
+  }
+  else if (n % 3 == 0 && n != 3 ){
+    isPrime = false;
+  }
+  else if (n % 5 == 0 && n!=5){
+    isPrime = false;
+  }else if (n % 7 == 0 && n != 7){
+    isPrime = false;
+  }
+  else{
+    isPrime = true;
+  }
+  if (isPrime){
+    print("$n is prime");
+  }
+  else{
+    print("$n is not prime");
+  }
+}
 
 
 
@@ -42,4 +88,9 @@ void main(){
   getNextDay(29, 2, 2026);
   getNextDay(30, 2, 2026);
   getNextDay(31, 12, 2025);
+countVowels("flutter mobile development");
+countVowels("Bekzat");
+FindMaxMin([14, 88, 3, 42, 99, 12, 67]);
+FindMaxMin([234, 34, 123, 44, 949, 112, 67]);
+PrimeChecker(2);
 }
