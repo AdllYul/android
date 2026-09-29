@@ -1,4 +1,4 @@
-// 1. Абстрактный класс MediaItem
+// 1. Abstract Class MediaItem
 abstract class MediaItem {
   String id;
   String title;
@@ -10,18 +10,18 @@ abstract class MediaItem {
     required this.price,
   });
 
-  // Абстрактный метод (без тела)
+  // Abstract method
   String getDetails();
 }
 
-// 3. Миксин Downloadable
+// 3. Mixin Downloadable
 mixin Downloadable {
   void download(String title) {
     print("Downloading '$title'...");
   }
 }
 
-// 2. Наследники Audiobook и EBook с применением миксина (with Downloadable)
+// 2. Subclasses Audiobook and EBook using 'with Downloadable'
 class Audiobook extends MediaItem with Downloadable {
   double durationHours;
   String narrator;
@@ -58,7 +58,7 @@ class EBook extends MediaItem with Downloadable {
   }
 }
 
-// 4. Класс Корзины Покупок
+// 4. Class ShoppingCart
 class ShoppingCart {
   final List<MediaItem> _items = [];
 
@@ -66,26 +66,26 @@ class ShoppingCart {
     _items.add(item);
   }
 
-  // Расчет итоговой суммы с налогом (по умолчанию 12% = 0.12)
+  // Uses .fold() to sum prices and add 12% tax
   double calculateTotalWithTax({double taxRate = 0.12}) {
     double subtotal = _items.fold(0.0, (sum, item) => sum + item.price);
     return subtotal * (1 + taxRate);
   }
 
-  // Фильтрация товаров по максимальной цене
+  // Uses .where() to filter items <= maxPrice
   List<MediaItem> filterByMaxPrice(double maxPrice) {
     return _items.where((item) => item.price <= maxPrice).toList();
   }
 
-  // Чек и скачивание
+  // Prints details and calls download() for Downloadable items
   void printReceipt() {
     print("--- RECEIPT ---");
     for (var item in _items) {
       print(item.getDetails());
 
-      // Проверяем, реализует ли товар миксин Downloadable
+      // Проверка и приведение типа для вызова метода из миксина
       if (item is Downloadable) {
-        item.download(item.title);
+        (item as Downloadable).download(item.title);
       }
       print("----------------");
     }
@@ -98,7 +98,7 @@ class ShoppingCart {
 void main() {
   ShoppingCart cart = ShoppingCart();
 
-  // Создаем товары
+  // Создание элементов
   Audiobook book1 = Audiobook(
     id: "A101",
     title: "Atomic Habits",
@@ -123,15 +123,15 @@ void main() {
     author: "John Doe",
   );
 
-  // Добавляем в корзину
+  // Добавление в корзину
   cart.addItem(book1);
   cart.addItem(book2);
   cart.addItem(book3);
 
-  // Печатаем чек
+  // Печать чека
   cart.printReceipt();
 
-  // Проверяем фильтрацию по цене <= 15.0
+  // Фильтрация по максимальной цене ($15.0)
   print("=== ITEMS FILTERED BY MAX PRICE (\$15.0) ===");
   List<MediaItem> cheapItems = cart.filterByMaxPrice(15.0);
   for (var item in cheapItems) {

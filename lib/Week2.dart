@@ -14,6 +14,9 @@ double processOrder({
   if (actualDelFee < 500.0){
     actualDelFee = 500.0;
   }
+  if (finalPrice > 4000){
+    actualDelFee = actualDelFee * 1.16;
+  }
   double total = finalPrice + actualDelFee;
 
   print("---ORDER SUMMARY---");
@@ -31,7 +34,7 @@ double processOrder({
 
 void main(){
   processOrder(orderId: 1, itemPrice: 1000);
-  processOrder(orderId: 2, itemPrice: 1000, promoCode: "SAVE10");
-  processOrder(orderId: 1, itemPrice: 1000,deliveryFee: 400);
+  processOrder(orderId: 2, itemPrice: 6000, promoCode: "SAVE10");
+  processOrder(orderId: 1, itemPrice: 5000, deliveryFee: 400);
 
 }
