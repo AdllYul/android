@@ -37,13 +37,13 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
         foregroundColor: Colors.white,
         centerTitle: true,
       ),
-
       body: Center(
         child: Card(
           elevation: 6,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
                   radius: 40,
@@ -51,47 +51,52 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
                   child: Icon(Icons.person, size: 50, color: Colors.white),
                 ),
                 SizedBox(height: 16),
-                Text('BeKZat Zharylkassyn'),
-                Text('Senior Lecturer'),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            '$_followerCount',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                Text(
+                  'BeKZat Zharylkassyn',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Senior Lecturer',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          '$_followerCount',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            'Followers',
-                            style: TextStyle(color: Colors.grey),
+                        ),
+                        Text(
+                          'Followers',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          '$_likesCount',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Column(
-                        children: [
-                          Text(
-                            '$_likesCount',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Likes ❤️',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Text(
+                          'Likes ❤️',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(height: 24),
+                // First Row of buttons: Follow and Like
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -100,19 +105,23 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
                       icon: Icon(_isFollowing ? Icons.check : Icons.person_add),
                       label: Text(_isFollowing ? 'Following' : 'Follow'),
                     ),
-                    SizedBox(width: 12),
                     OutlinedButton.icon(
                       onPressed: _incrementLike,
-                      icon: Icon(Icons.library_add_check),
+                      icon: Icon(Icons.thumb_up),
                       label: Text('Like'),
                     ),
-                    SizedBox(width: 12),
+                  ],
+                ),
+                SizedBox(height: 12),
+                // Second Row of buttons: Unlike and Reset
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                     OutlinedButton.icon(
                       onPressed: _decrementLike,
                       icon: Icon(Icons.thumb_down),
                       label: Text('Unlike'),
                     ),
-                    SizedBox(width: 12),
                     OutlinedButton.icon(
                       onPressed: _reset,
                       icon: Icon(Icons.assignment_return),
@@ -150,6 +159,7 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
       _likesCount--;
     });
   }
+
   void _reset() {
     setState(() {
       _likesCount = 120;
